@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-class DeleteAppointment extends Component {
+class deleteShifts extends Component {
     constructor(props) {
         super(props);
         this.state = { value: '' };
@@ -39,4 +39,4 @@ class DeleteAppointment extends Component {
     }
 }
 
-export default DeleteAppointment
+export default deleteShifts

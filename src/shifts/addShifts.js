@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import '../index.css'
 
-class AddAppointment extends Component {
+class addShifts extends Component {
     constructor(props) {
         super(props);
         this.state = { Title: '', Start: '', End: '' };
@@ -46,4 +46,4 @@ class AddAppointment extends Component {
     }
 }
 
-export default AddAppointment
+export default addShifts

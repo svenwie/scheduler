@@ -3,9 +3,9 @@ import './index.css';
 import * as React from 'react';
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
 import { extend } from '@syncfusion/ej2-base';
-import AddAppointment from './Appointments/AddAppointment';
-import DeleteAppointment from './Appointments/DeleteAppointment';
-import ModifyAppointment from './Appointments/ModifyAppointment';
+import AddAppointment from './shifts/addShifts';
+import DeleteAppointment from './shifts/deleteShifts';
+import ModifyAppointment from './shifts/modifyShifts';
 
 class Default extends React.Component {
   constructor(props) {
@@ -14,7 +14,8 @@ class Default extends React.Component {
   }
 
   state = {
-    scheduleData: []
+    scheduleData: [],
+    scheduleShiftEntry: []
   }
 
   change(args) {
@@ -36,8 +37,22 @@ class Default extends React.Component {
       })
   }
 
+  getShiftEntry = () => {
+    fetch('https://noname.lab.medsolv.net/ShiftEntry')
+      .then((response) => {
+        return response.json()
+      })
+      .then((myJson) => {
+        // window.appointments = myJson;
+        // console.log('--->', myJson)
+        let scheduleShiftEntry = myJson.map(shiftEntry => ({ Id: shiftEntry.id, StartTime: shiftEntry.start, EndTime: shiftEntry.end }));
+        this.setState({ scheduleShiftEntry })
+      })
+  }
+
   componentDidMount() {
     this.getData()
+    this.getShiftEntry()
   }
 
   render() {
@@ -57,7 +72,7 @@ class Default extends React.Component {
             </ScheduleComponent>
             </div>
             <div>
-            <ScheduleComponent height='650px' width='1000px' eventSettings={{ dataSource: this.state.scheduleData }} >
+            <ScheduleComponent height='650px' width='1000px' eventSettings={{ dataSource: this.state.scheduleShiftEntry }} >
               <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]} />
             </ScheduleComponent>
             </div>
