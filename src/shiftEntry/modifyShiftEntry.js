@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import moment from 'moment'
-import '../index.css'
+import axios from 'axios';
+import moment from 'moment';
+// import { DataManager, Query, ReturnOption } from '@syncfusion/ej2-data';
 
-class AddAppointment extends Component {
+export default class ModifyShiftEntry extends Component {
     constructor(props) {
         super(props);
-        this.state = { Title: '', Start: '', End: '' };
+        this.state = { Id: '', Start: '', End: '' };
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -16,18 +16,18 @@ class AddAppointment extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        const id = this.state.Id
         const appointment = {
-            Name: this.state.Title,
             Start: moment(this.state.Start).format(),
             End: moment(this.state.End).format()
         };
-        const url = 'https://noname.lab.medsolv.net/shifts';
-        axios.post(url, appointment)
+        const url = 'https://noname.lab.medsolv.net/shiftEntry/';
+        axios.patch(url + id, appointment)
             .then(() => this.props.parentMethod());
-        console.log('Termin wurde hinzugefügt');
-        console.log(url, appointment);
+        console.log('Resource wurde verändert');
+        console.log(url + id, appointment)
         this.setState({
-            Title: '', Start: '', End: ''
+            Id: '', Start: '', End: ''
         })
     }
 
@@ -35,15 +35,13 @@ class AddAppointment extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Einen Termin hinzufügen: </label>
-                    <input name="Title" type="text" onChange={this.handleChange} value={this.state.Title} placeholder="Name der Schicht" />
+                    <label>Eine Resource verändern: </label>
+                    <input name="Id" type="text" onChange={this.handleChange} value={this.state.Id} placeholder="Hier kann man später eine Resource wählen" />
                     <input name="Start" type="text" onChange={this.handleChange} value={this.state.Start} placeholder="Start Bsp.: 2018-12-12 10:30:48" />
                     <input name="End" type="text" onChange={this.handleChange} value={this.state.End} placeholder="Ende Bsp.: 2018-12-12 11:30:48" />
-                    <button type="submit">Senden </button>
+                    <button type="submit">Senden</button>
                 </form>
             </div>
         )
     }
 }
-
-export default AddAppointment

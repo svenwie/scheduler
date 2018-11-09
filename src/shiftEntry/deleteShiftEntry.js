@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-class DeleteAppointment extends Component {
+class DeleteShiftEntry extends Component {
     constructor(props) {
         super(props);
         this.state = { value: '' };
@@ -16,7 +16,7 @@ class DeleteAppointment extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const id = this.state.value
-        const url = 'https://noname.lab.medsolv.net/shifts/'
+        const url = 'https://noname.lab.medsolv.net/shiftEntry/'
         axios.delete(url + id)
             .then(() => this.props.parentMethod());
         console.log(url + id)
@@ -30,8 +30,8 @@ class DeleteAppointment extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Einen Termin löschen: </label>
-                    <input id="Id" type="text" onChange={this.handleChange} value={this.state.value} placeholder="ID der Schicht" />
+                    <label>Eine Resource löschen: </label>
+                    <input id="Id" type="text" onChange={this.handleChange} value={this.state.value} placeholder="Id der Resource" />
                     <button type="submit">Senden</button>
                 </form>
             </div>
@@ -39,4 +39,4 @@ class DeleteAppointment extends Component {
     }
 }
 
-export default DeleteAppointment
+export default DeleteShiftEntry
