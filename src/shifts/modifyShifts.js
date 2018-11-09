@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 // import { DataManager, Query, ReturnOption } from '@syncfusion/ej2-data';
 
-class modifyShifts extends Component {
+export default class ModifyShifts extends Component {
     constructor(props) {
         super(props);
         this.state = { Id: '', Title: '', Start: '', End: '' };
@@ -47,5 +47,3 @@ class modifyShifts extends Component {
         )
     }
 }
-
-export default modifyShifts

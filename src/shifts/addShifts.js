@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import '../index.css'
 
-class addShifts extends Component {
+class AddShifts extends Component {
     constructor(props) {
         super(props);
         this.state = { Title: '', Start: '', End: '' };
@@ -24,7 +24,7 @@ class addShifts extends Component {
         const url = 'https://noname.lab.medsolv.net/shifts';
         axios.post(url, appointment)
             .then(() => this.props.parentMethod());
-        console.log('Termin wurde hinzugefügt');
+        console.log('Termin');
         console.log(url, appointment);
         this.setState({
             Title: '', Start: '', End: ''
@@ -46,4 +46,4 @@ class addShifts extends Component {
     }
 }
 
-export default addShifts
+export default AddShifts

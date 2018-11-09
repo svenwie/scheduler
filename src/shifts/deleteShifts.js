@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-class deleteShifts extends Component {
+class DeleteShifts extends Component {
     constructor(props) {
         super(props);
         this.state = { value: '' };
@@ -39,4 +39,4 @@ class deleteShifts extends Component {
     }
 }
 
-export default deleteShifts
+export default DeleteShifts
