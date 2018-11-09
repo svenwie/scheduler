@@ -23,3 +23,24 @@ hr {
   padding-left: 0;
   padding-top: 0;
 }
+
+label, input {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 300px;
+}
+
+label {
+  color: #2D2D2D;
+  font-size: 15px;
+}
+
+form, input {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+form {
+  width: 500px;
+}

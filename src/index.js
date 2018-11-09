@@ -52,9 +52,9 @@ class Default extends React.Component {
           </div>
         </div>
         <div>
-          <ModifyAppointment parentMethod={this.getData}>{this.props.children}></ModifyAppointment>
-          <AddAppointment parentMethod={this.getData}>{this.props.children}></AddAppointment>
-          <DeleteAppointment parentMethod={this.getData}>{this.props.children}</DeleteAppointment>
+          <AddAppointment parentMethod={this.getData}>{this.props.children}></AddAppointment><br />
+          <ModifyAppointment parentMethod={this.getData}>{this.props.children}></ModifyAppointment><br />
+          <DeleteAppointment parentMethod={this.getData}>{this.props.children}</DeleteAppointment><br />
         </div>
       </div>);
   }

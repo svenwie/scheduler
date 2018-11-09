@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import '../index.css'
 
 class AddAppointment extends Component {
     constructor(props) {
@@ -32,13 +33,13 @@ class AddAppointment extends Component {
 
     render() {
         return (
-            <div >
+            <div>
                 <form onSubmit={this.handleSubmit}>
-                <label>Einen Termin hinzufügen: </label>
-                <input name="Title" type="text" onChange={this.handleChange} value={this.state.Title} placeholder="Name der Schicht" />
-                <input name="Start" type="text" onChange={this.handleChange} value={this.state.Start} placeholder="Start Bsp.: 2018-12-12 10:30:48" />
-                <input name="End" type="text" onChange={this.handleChange} value={this.state.End} placeholder="Ende Bsp.: 2018-12-12 11:30:48" />
-                <button type="submit">Senden </button>
+                    <label>Einen Termin hinzufügen: </label>
+                    <input name="Title" type="text" onChange={this.handleChange} value={this.state.Title} placeholder="Name der Schicht" />
+                    <input name="Start" type="text" onChange={this.handleChange} value={this.state.Start} placeholder="Start Bsp.: 2018-12-12 10:30:48" />
+                    <input name="End" type="text" onChange={this.handleChange} value={this.state.End} placeholder="Ende Bsp.: 2018-12-12 11:30:48" />
+                    <button type="submit">Senden </button>
                 </form>
             </div>
         )
