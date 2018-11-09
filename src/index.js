@@ -46,15 +46,22 @@ class Default extends React.Component {
       <div className='schedule-control-section'>
         <div className='col-lg-9 control-section'>
           <div className='control-wrapper'>
-            <ScheduleComponent height='650px' eventSettings={{ dataSource: this.state.scheduleData }} >
+            <div>
+              <AddAppointment parentMethod={this.getData}>{this.props.children}></AddAppointment><br />
+              <ModifyAppointment parentMethod={this.getData}>{this.props.children}></ModifyAppointment><br />
+              <DeleteAppointment parentMethod={this.getData}>{this.props.children}</DeleteAppointment><br />
+            </div>
+            <div>
+            <ScheduleComponent height='650px' width='1000px' eventSettings={{ dataSource: this.state.scheduleData }} >
               <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]} />
             </ScheduleComponent>
+            </div>
+            <div>
+            <ScheduleComponent height='650px' width='1000px' eventSettings={{ dataSource: this.state.scheduleData }} >
+              <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]} />
+            </ScheduleComponent>
+            </div>
           </div>
-        </div>
-        <div>
-          <AddAppointment parentMethod={this.getData}>{this.props.children}></AddAppointment><br />
-          <ModifyAppointment parentMethod={this.getData}>{this.props.children}></ModifyAppointment><br />
-          <DeleteAppointment parentMethod={this.getData}>{this.props.children}</DeleteAppointment><br />
         </div>
       </div>);
   }
