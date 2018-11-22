@@ -30,7 +30,7 @@ class DeleteShifts extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Einen Termin löschen: </label>
+                    <label>Eine Schicht löschen: </label>
                     <input id="Id" type="text" onChange={this.handleChange} value={this.state.value} placeholder="ID der Schicht" />
                     <button type="submit">Senden</button>
                 </form>

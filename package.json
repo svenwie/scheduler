@@ -57,6 +57,7 @@
     "moment": "^2.22.2",
     "react": "16.4.2",
     "react-dom": "16.4.2",
+    "react-responsive-modal": "^3.5.1",
     "semantic-ui-react": "^0.83.0"
   },
   "scripts": {

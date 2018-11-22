@@ -36,7 +36,7 @@ export default class ModifyShifts extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Einen Termin verändern: </label>
+                    <label>Eine Schicht verändern: </label>
                     <input name="Id" type="text" onChange={this.handleChange} value={this.state.Id} placeholder="ID der Schicht" />
                     <input name="Title" type="text" onChange={this.handleChange} value={this.state.Title} placeholder="Name der Schicht" />
                     <input name="Start" type="text" onChange={this.handleChange} value={this.state.Start} placeholder="Start Bsp.: 2018-12-12 10:30:48" />
