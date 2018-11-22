@@ -44,3 +44,18 @@ form, input {
 form {
   width: 500px;
 }
+
+.custom-work-days.e-schedule .e-month-view .e-work-days.willsmith,
+.custom-work-days.e-schedule .e-vertical-view .e-work-hours.willsmith {
+    background-color: #faebd7;
+}
+
+.custom-work-days.e-schedule .e-month-view .e-work-days.alice,
+.custom-work-days.e-schedule .e-vertical-view .e-work-hours.alice {
+    background-color: #fcdedf;
+}
+
+.custom-work-days.e-schedule .e-month-view .e-work-days.robson,
+.custom-work-days.e-schedule .e-vertical-view .e-work-hours.robson {
+    background-color: #deeeac;
+}

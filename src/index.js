@@ -1,6 +1,6 @@
 import { render } from 'react-dom';
+import React from 'react';
 import './index.css';
-import * as React from 'react';
 import {
 	ScheduleComponent,
 	Day,
@@ -13,7 +13,6 @@ import {
 	DragAndDrop
 } from '@syncfusion/ej2-react-schedule';
 import { extend } from '@syncfusion/ej2-base';
-// import { DataManager, Query } from '@syncfusion/ej2-data';
 import AddShifts from './shifts/AddShifts';
 import DeleteShifts from './shifts/DeleteShifts';
 import ModifyShifts from './shifts/ModifyShifts';
@@ -21,16 +20,20 @@ import AddShiftEntry from './shiftEntry/AddShiftEntry';
 import DeleteShiftEntry from './shiftEntry/DeleteShiftEntry';
 import ModifyShiftEntry from './shiftEntry/ModifyShiftEntry';
 
+import Modal from 'react-responsive-modal';
+
+const styles = {
+	fontFamily: 'sans-serif',
+	textAlign: 'center'
+};
+
 class Default extends React.Component {
 	constructor(props) {
+		// console.log(props);
 		super(props);
 		this.data = extend([], null, true);
+		this.state = { open: false, scheduleData: [], scheduleShiftEntry: [] };
 	}
-
-	state = {
-		scheduleData: [],
-		scheduleShiftEntry: []
-	};
 
 	change(args) {
 		this.scheduleObj.selectedDate = args.value;
@@ -76,37 +79,54 @@ class Default extends React.Component {
 		this.getShiftEntry();
 	}
 
-	onEventRendered(args) { 
-		let categoryColor = args.data.CategoryColor; 
-		if (!args.element || !categoryColor) { 
-		  return; 
-		} 
-		if (this.currentView === 'Agenda') { 
-		  (args.element.firstChild).style.borderLeftColor = categoryColor; 
-		} else { 
-		  args.element.style.backgroundColor = categoryColor; 
-		} 
-	  } 
-	
+	onEventRendered(args) {
+		let categoryColor = args.data.CategoryColor;
+		if (!args.element || !categoryColor) {
+			return;
+		}
+		if (this.currentView === 'Agenda') {
+			args.element.firstChild.style.borderLeftColor = categoryColor;
+		} else {
+			args.element.style.backgroundColor = categoryColor;
+		}
+	}
+
+	// wird ausgelöst wenn ein bestehendes appointment geklickt wird
+	// onEventClick(args) {
+	// 	console.log('onEventClick args --->', args);
+	// }
+
+	onOpenModal = () => {
+		this.setState({ open: true });
+	};
+
+	onCloseModal = () => {
+		this.setState({ open: false });
+	};
+
 	render() {
-		var combinedSources = [ ...this.state.scheduleData, ...this.state.scheduleShiftEntry ];
-		// console.log('args->', args)
-		// console.log('this.scheduleObj->', this.scheduleObj);
-		// console.log('this.state.scheduleData->', this.state.scheduleData)
-		// console.log('this.state.scheduleShiftEntry->', this.state.scheduleShiftEntry)
+		// console.log('this.state->', this.state);
 		// console.log('combinedSources-->', combinedSources)
+		var combinedSources = [ ...this.state.scheduleData, ...this.state.scheduleShiftEntry ];
+		const { open } = this.state;
 		return (
 			<div className="schedule-control-section">
 				<div className="col-lg-9 control-section">
 					<div className="control-wrapper">
-						<div>
-							<AddShifts parentMethod={this.getData}>{this.props.children}</AddShifts>
-							<br />
-							<ModifyShifts parentMethod={this.getData}>{this.props.children}</ModifyShifts>
-							<br />
-							<DeleteShifts parentMethod={this.getData}>{this.props.children}</DeleteShifts>
-							<br />
+						<div style={styles}>
+							<button onClick={this.onOpenModal}>Schicht</button>
+							<Modal open={open} onClose={this.onCloseModal} center>
+								<div>
+									<AddShifts parentMethod={this.getData}>{this.props.children}</AddShifts>
+									<br />
+									<ModifyShifts parentMethod={this.getData}>{this.props.children}</ModifyShifts>
+									<br />
+									<DeleteShifts parentMethod={this.getData}>{this.props.children}</DeleteShifts>
+									<br />
+								</div>
+							</Modal>
 						</div>
+
 						<div>
 							<ScheduleComponent
 								height="650px"
@@ -128,9 +148,12 @@ class Default extends React.Component {
 						</div>
 						<div>
 							<ScheduleComponent
+								cssClass="custom-work-days"
 								height="650px"
 								width="1000px"
-								eventSettings={{ dataSource: combinedSources }}
+								eventSettings={{
+									dataSource: combinedSources
+								}}
 								eventRendered={this.onEventRendered.bind(this)}
 							>
 								<Inject services={[ Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop ]} />
