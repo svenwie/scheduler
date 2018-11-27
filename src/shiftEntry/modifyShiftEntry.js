@@ -35,8 +35,8 @@ export default class ModifyShiftEntry extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Eine Resource verändern: </label>
-                    <input name="Id" type="text" onChange={this.handleChange} value={this.state.Id} placeholder="Hier kann man später eine Resource wählen" />
+                    <label>Eine Ressource verändern: </label>
+                    <input name="Id" type="text" onChange={this.handleChange} value={this.state.Id} placeholder="Hier kann man später eine Ressource wählen" />
                     <input name="Start" type="text" onChange={this.handleChange} value={this.state.Start} placeholder="Start Bsp.: 2018-12-12 10:30:48" />
                     <input name="End" type="text" onChange={this.handleChange} value={this.state.End} placeholder="Ende Bsp.: 2018-12-12 11:30:48" />
                     <button type="submit">Senden</button>

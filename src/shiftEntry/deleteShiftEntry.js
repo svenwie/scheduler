@@ -30,8 +30,8 @@ class DeleteShiftEntry extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Eine Resource löschen: </label>
-                    <input id="Id" type="text" onChange={this.handleChange} value={this.state.value} placeholder="Id der Resource" />
+                    <label>Eine Ressource löschen: </label>
+                    <input id="Id" type="text" onChange={this.handleChange} value={this.state.value} placeholder="Id der Ressource" />
                     <button type="submit">Senden</button>
                 </form>
             </div>
