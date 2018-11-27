@@ -20,12 +20,12 @@ import AddShiftEntry from './shiftEntry/AddShiftEntry';
 import DeleteShiftEntry from './shiftEntry/DeleteShiftEntry';
 import ModifyShiftEntry from './shiftEntry/ModifyShiftEntry';
 
-import Modal from 'react-responsive-modal';
+// import Modal from 'react-responsive-modal';
 
-const styles = {
-	fontFamily: 'sans-serif',
-	textAlign: 'center'
-};
+// const styles = {
+// 	fontFamily: 'sans-serif',
+// 	textAlign: 'center'
+// };
 
 class Default extends React.Component {
 	constructor(props) {
@@ -65,10 +65,10 @@ class Default extends React.Component {
 			.then((myJson) => {
 				let scheduleShiftEntry = myJson.map((shiftEntry) => ({
 					Id: shiftEntry.id,
-					Subject: 'Resource',
+					Subject: 'Ressource',
 					StartTime: shiftEntry.start,
 					EndTime: shiftEntry.end,
-					CategoryColor: '#404040'
+					CategoryColor: '#179b3e'
 				}));
 				this.setState({ scheduleShiftEntry });
 			});
@@ -92,46 +92,87 @@ class Default extends React.Component {
 	}
 
 	// wird ausgelöst wenn ein bestehendes appointment geklickt wird
-	// onEventClick(args) {
-	// 	console.log('onEventClick args --->', args);
+	// onEventClick = () => {
+	// 	console.log('onEventClick args');
 	// }
 
-	onOpenModal = () => {
-		this.setState({ open: true });
-	};
+	// onCellClick = (e) => {
+	// 	console.log('onCellKlick wurde ausgelöst')
+	// 	this.setState({ open: true });
+	// }
 
-	onCloseModal = () => {
-		this.setState({ open: false });
-	};
+	// onCellDoubleClick = () => {
+	// 	console.log('onCellDoubleClick wurde ausgeführt')
+	// 	this.setState({ open: true });
+	// }
+
+	// wurde in onCellDoubleClick eingebaut, ist die modal bibliothek
+	// onOpenModal = () => {
+	// 	this.setState({ open: true });
+	// };
+
+	// onCloseModal = () => {
+	// 	this.setState({ open: false });
+	// };
+
+	onActionBegin(args) {
+		console.log('onActionBegin--->', args.requestType);
+		var data;
+		if (args.requestType === 'eventCreate') {
+			let data = args.data;
+			console.log('args.data--->', data);
+			console.log('StartTime--->', data[0].StartTime);
+			console.log('EndTime--->', data[0].EndTime);
+			console.log('Subject--->', data[0].Subject);
+			console.log('an event has been created');
+		}
+		if (args.requestType === 'eventChange') {
+			let data = args.data;
+			console.log('args.data--->', data);
+			
+			// console.log('EndTime--->', data[0].EndTime);
+			// console.log('Subject--->', data[0].Subject);
+			console.log('an event has been changed');
+			debugger;
+			console.log('StartTime--->', data[0].StartTime);
+		}
+		if (args.requestType === 'eventRemove') {
+			let data = args.data;
+			console.log('args.data--->', data);
+			// console.log('StartTime--->', data[0].StartTime);
+			// console.log('EndTime--->', data[0].EndTime);
+			// console.log('Subject--->', data[0].Subject);
+			console.log('an event has been removed');
+		}
+	}
 
 	render() {
 		// console.log('this.state->', this.state);
+		// console.log('this.props--->',this.props);
+		// console.log('this.data--->',this.data)
 		// console.log('combinedSources-->', combinedSources)
 		var combinedSources = [ ...this.state.scheduleData, ...this.state.scheduleShiftEntry ];
-		const { open } = this.state;
+		// const { open } = this.state;
 		return (
 			<div className="schedule-control-section">
 				<div className="col-lg-9 control-section">
 					<div className="control-wrapper">
-						<div style={styles}>
-							<button onClick={this.onOpenModal}>Schicht</button>
-							<Modal open={open} onClose={this.onCloseModal} center>
-								<div>
-									<AddShifts parentMethod={this.getData}>{this.props.children}</AddShifts>
-									<br />
-									<ModifyShifts parentMethod={this.getData}>{this.props.children}</ModifyShifts>
-									<br />
-									<DeleteShifts parentMethod={this.getData}>{this.props.children}</DeleteShifts>
-									<br />
-								</div>
-							</Modal>
+						<div>
+							<AddShifts parentMethod={this.getData}>{this.props.children}</AddShifts>
+							<br />
+							<ModifyShifts parentMethod={this.getData}>{this.props.children}</ModifyShifts>
+							<br />
+							<DeleteShifts parentMethod={this.getData}>{this.props.children}</DeleteShifts>
+							<br />
 						</div>
-
 						<div>
 							<ScheduleComponent
 								height="650px"
 								width="1000px"
 								eventSettings={{ dataSource: this.state.scheduleData }}
+								cellClick={this.onCellClick}
+								cellDoubleClick={this.onCellDoubleClick}
+								showQuickInfo={false}
 							>
 								<Inject services={[ Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop ]} />
 							</ScheduleComponent>
@@ -155,6 +196,7 @@ class Default extends React.Component {
 									dataSource: combinedSources
 								}}
 								eventRendered={this.onEventRendered.bind(this)}
+								actionBegin={this.onActionBegin.bind(this)}
 							>
 								<Inject services={[ Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop ]} />
 							</ScheduleComponent>
