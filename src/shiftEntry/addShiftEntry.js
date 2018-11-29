@@ -8,7 +8,7 @@ class AddShiftEntry extends Component {
         super(props);
         this.state = { Id: '', Start: '', End: '' };
         this.handleChange = this.handleChange.bind(this);
-    }
+    } 
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
