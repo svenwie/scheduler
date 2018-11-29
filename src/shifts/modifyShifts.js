@@ -12,7 +12,7 @@ export default class ModifyShifts extends Component {
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
-    }
+    } 
 
     handleSubmit = (e) => {
         e.preventDefault();

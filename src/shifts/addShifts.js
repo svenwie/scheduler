@@ -8,7 +8,7 @@ class AddShifts extends Component {
         super(props);
         this.state = { Title: '', Start: '', End: '' };
         this.handleChange = this.handleChange.bind(this);
-    }
+    } 
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });

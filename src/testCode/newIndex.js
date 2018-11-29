@@ -1,6 +1,6 @@
 import { render } from 'react-dom';
+import React from 'react';
 import './index.css';
-import * as React from 'react';
 import {
 	ScheduleComponent,
 	Day,
@@ -13,8 +13,6 @@ import {
 	DragAndDrop
 } from '@syncfusion/ej2-react-schedule';
 import { extend } from '@syncfusion/ej2-base';
-// import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
-// import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import AddShifts from './shifts/AddShifts';
 import DeleteShifts from './shifts/DeleteShifts';
 import ModifyShifts from './shifts/ModifyShifts';
@@ -28,27 +26,14 @@ const styles = {
 	fontFamily: 'sans-serif',
 	textAlign: 'center'
 };
+
 class Default extends React.Component {
 	constructor(...props) {
-		console.log(props);
+		// console.log(props);
 		super(props);
 		this.data = extend([], null, true);
+		this.state = { open: false, scheduleData: [], scheduleShiftEntry: [] };
 	}
-
-	state = {
-		scheduleData: [
-			//        {
-			//     Id: 1,
-			//     Subject: 'Server Maintenance',
-			//     StartTime: new Date(2018, 11, 11, 10, 0),
-			//     EndTime: new Date(2018, 11, 11, 11, 30),
-			//    // EventType: 'maintenance',
-			//     City: 'Seattle',
-			//     CategoryColor: '#1aaa55'
-			// }
-		],
-		scheduleShiftEntry: []
-	};
 
 	change(args) {
 		this.scheduleObj.selectedDate = args.value;
@@ -83,7 +68,7 @@ class Default extends React.Component {
 					Subject: 'Resource',
 					StartTime: shiftEntry.start,
 					EndTime: shiftEntry.end,
-					CategoryColor: '#1aaa55'
+					CategoryColor: '#404040'
 				}));
 				this.setState({ scheduleShiftEntry });
 			});
@@ -129,6 +114,7 @@ class Default extends React.Component {
 	};
 
 	onPopupOpen = (e) => {
+		// console.log('onPopupOpen')
 		this.setState({ open: true });
 	};
 
@@ -161,13 +147,10 @@ class Default extends React.Component {
 	}
 
 	render() {
-		var combinedSources = [ ...this.state.scheduleData, ...this.state.scheduleShiftEntry ];
-		console.log('this.state->', this.state);
-		const { open } = this.state;
-		// console.log('this.scheduleObj->', this.scheduleObj);
-		// console.log('this.state.scheduleData->', this.state.scheduleData)
-		// console.log('this.state.scheduleShiftEntry->', this.state.scheduleShiftEntry)
+		// console.log('this.state->', this.state);
 		// console.log('combinedSources-->', combinedSources)
+		var combinedSources = [ ...this.state.scheduleData, ...this.state.scheduleShiftEntry ];
+		const { open } = this.state;
 		return (
 			<div className="schedule-control-section">
 				<div className="col-lg-9 control-section">
@@ -184,45 +167,39 @@ class Default extends React.Component {
 								</div>
 							</Modal>
 						</div>
+
 						<div>
 							<ScheduleComponent
 								height="650px"
 								width="1000px"
 								eventSettings={{ dataSource: this.state.scheduleData }}
-								ref={(schedule) => (this.combinedSources = schedule)}
 								cellClick={this.onCellClick}
 								cellDoubleClick={this.onCellDoubleClick}
-								editorTemplate={this.editorTemplate}
 								showQuickInfo={false}
-								popupOpen={this.onPopupOpen.bind(this)}
 								actionBegin={this.onActionBegin.bind(this)}
+								popupOpen={this.onPopupOpen.bind(this)}
 							>
 								<Inject services={[ Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop ]} />
 							</ScheduleComponent>
 						</div>
-						<Modal open={open} onClose={this.onCloseModal} center>
-							<div>
-								<AddShiftEntry parentMethod={this.getData}>{this.props.children}</AddShiftEntry>
-								<br />
-								<ModifyShiftEntry parentMethod={this.getData}>{this.props.children}</ModifyShiftEntry>
-								<br />
-								<DeleteShiftEntry parentMethod={this.getData}>{this.props.children}</DeleteShiftEntry>
-								<br />
-							</div>
-						</Modal>
+						<div>
+							<AddShiftEntry parentMethod={this.getShiftEntry}>{this.props.children}</AddShiftEntry>
+							<br />
+							<ModifyShiftEntry parentMethod={this.getShiftEntry}>
+								{this.props.children}>
+							</ModifyShiftEntry>
+							<br />
+							<DeleteShiftEntry parentMethod={this.getShiftEntry}>{this.props.children}</DeleteShiftEntry>
+							<br />
+						</div>
 						<div>
 							<ScheduleComponent
 								cssClass="custom-work-days"
 								height="650px"
 								width="1000px"
-								eventSettings={{ dataSource: combinedSources }}
-								ref={(schedule) => (this.combinedSources = schedule)}
-								cellClick={this.onCellClick}
-								cellDoubleClick={this.onCellDoubleClick}
-								editorTemplate={this.editorTemplate}
-								showQuickInfo={false}
-								popupOpen={this.onPopupOpen.bind(this)}
-								actionBegin={this.onActionBegin.bind(this)}
+								eventSettings={{
+									dataSource: combinedSources
+								}}
 								eventRendered={this.onEventRendered.bind(this)}
 							>
 								<Inject services={[ Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop ]} />

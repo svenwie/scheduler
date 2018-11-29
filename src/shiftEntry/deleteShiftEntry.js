@@ -10,7 +10,7 @@ class DeleteShiftEntry extends Component {
 
     handleChange(event) {
         this.setState({ value: event.target.value });
-    }
+    } 
 
     // call function to delete a shift
     handleSubmit = (e) => {
